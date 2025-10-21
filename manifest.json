@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Random Keep Note Picker",
+  "version": "1.0",
+  "description": "Выбирает случайную заметку в Google Keep по указанному ярлыку",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["https://keep.google.com/*"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Выбрать случайную заметку"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}
