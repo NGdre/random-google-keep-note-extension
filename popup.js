@@ -80,10 +80,52 @@ const STATUS_TYPES = {
   SUCCESS: "success",
 };
 
-document.addEventListener("DOMContentLoaded", function () {
+function extractLabelFromUrl(url) {
+  try {
+    // Ищем паттерн #label/имя_ярлыка в URL
+    const match = url.match(/#label\/([^&]+)/);
+    if (match && match[1]) {
+      return decodeURIComponent(match[1]);
+    }
+
+    // Альтернативный вариант для нового формата URL
+    // %2F - это URL-encoded представление символа /
+    const altMatch = url.match(/label%2F([^&]+)/);
+    if (altMatch && altMatch[1]) {
+      return decodeURIComponent(altMatch[1]);
+    }
+  } catch (error) {
+    console.error("Ошибка при извлечении ярлыка:", error);
+  }
+
+  return "";
+}
+
+async function updateLabelFromCurrentTab(labelInput) {
+  try {
+    const [tab] = await chrome.tabs.query({
+      active: true,
+      currentWindow: true,
+      url: CONFIG.KEEP_URL,
+    });
+
+    if (tab && tab.url) {
+      const label = extractLabelFromUrl(tab.url);
+      if (label) {
+        labelInput.value = label;
+      }
+    }
+  } catch (error) {
+    console.error("Ошибка при получении текущей вкладки:", error);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", async function () {
   const labelInput = document.getElementById("labelInput");
   const pickButton = document.getElementById("pickNote");
   const statusDiv = document.getElementById("status");
+
+  await updateLabelFromCurrentTab(labelInput);
 
   function showStatus(message, type) {
     statusDiv.textContent = message;
@@ -148,9 +190,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 window.scrollTo(0, currentHeight);
 
                 // Обновляем статус
-                loadingIndicator.textContent = `${MESSAGES.LOADING_PROGRESS} (${
-                  scrollCount + 1
-                }/${maxScrolls}) | Заметок: ${totalNotes}`;
+                loadingIndicator.textContent = `${MESSAGES.LOADING_PROGRESS} (${scrollCount}/${maxScrolls}) | Заметок: ${totalNotes}`;
 
                 // Ждем загрузки новых данных
                 await new Promise((resolve) =>
