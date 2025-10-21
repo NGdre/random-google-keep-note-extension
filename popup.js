@@ -124,6 +124,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   const labelInput = document.getElementById("labelInput");
   const pickButton = document.getElementById("pickNote");
   const statusDiv = document.getElementById("status");
+  const closeButton = document.getElementById("closeButton");
 
   await updateLabelFromCurrentTab(labelInput);
 
@@ -139,7 +140,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       : BUTTON_TEXT.DEFAULT;
   }
 
-  pickButton.addEventListener("click", async () => {
+  // Функция для обработки выбора случайной заметки
+  async function handleRandomNoteSelection() {
     const label = labelInput.value.trim();
 
     if (!label) {
@@ -360,11 +362,6 @@ document.addEventListener("DOMContentLoaded", async function () {
               const opened = await openNote(currentNote);
 
               if (opened) {
-                // Показываем индикатор успеха
-                showLoadingIndicator(
-                  `${MESSAGES.RANDOM_NOTE_SELECTED} (${notes.length} найдено)`
-                );
-
                 resolve({
                   success: true,
                   totalNotes: notes.length,
@@ -407,6 +404,19 @@ document.addEventListener("DOMContentLoaded", async function () {
     } finally {
       setButtonsState(false);
     }
+  }
+
+  pickButton.addEventListener("click", handleRandomNoteSelection);
+
+  labelInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleRandomNoteSelection();
+    }
+  });
+
+  closeButton.addEventListener("click", function () {
+    window.close();
   });
 
   // АВТОФОКУС НА ПОЛЕ ВВОДА

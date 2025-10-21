@@ -2,104 +2,16 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <style>
-      body {
-        width: 300px;
-        padding: 15px;
-        font-family: "Roboto", Arial, sans-serif;
-      }
-      .header {
-        display: flex;
-        align-items: center;
-        margin-bottom: 15px;
-      }
-      .header img {
-        width: 24px;
-        height: 24px;
-        margin-right: 10px;
-      }
-      .header h1 {
-        margin: 0;
-        font-size: 16px;
-        color: #5f6368;
-      }
-      input {
-        width: 100%;
-        padding: 10px;
-        margin: 8px 0;
-        border: 1px solid #dadce0;
-        border-radius: 4px;
-        font-size: 14px;
-        box-sizing: border-box;
-      }
-      input:focus {
-        outline: none;
-        border-color: #1a73e8;
-      }
-      button {
-        width: 100%;
-        padding: 10px;
-        margin: 5px 0;
-        background: #1a73e8;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        font-size: 14px;
-        cursor: pointer;
-        transition: background 0.2s;
-      }
-      button:hover {
-        background: #1669d6;
-      }
-      button:disabled {
-        background: #ccc;
-        cursor: not-allowed;
-      }
-      .status {
-        margin-top: 10px;
-        padding: 8px;
-        border-radius: 4px;
-        font-size: 13px;
-        display: none;
-      }
-      .success {
-        background: #e6f4ea;
-        color: #137333;
-        border: 1px solid #b6e5c8;
-        display: block;
-      }
-      .error {
-        background: #fce8e6;
-        color: #c5221f;
-        border: 1px solid #f5b4ab;
-        display: block;
-      }
-      .info {
-        background: #e8f0fe;
-        color: #1967d2;
-        border: 1px solid #b3cdf9;
-        display: block;
-      }
-      .hint {
-        font-size: 12px;
-        color: #5f6368;
-        margin-top: 5px;
-      }
-    </style>
+    <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
     <div class="header">
-      <img src="icon48.png" alt="Icon" />
       <h1>Random Keep Note</h1>
     </div>
-
+    <button id="closeButton" class="close-button">×</button>
     <input type="text" id="labelInput" placeholder="Введите название ярлыка" />
 
     <button id="pickNote">Выбрать случайную заметку</button>
-    <!-- <button id="resetNote" style="display: none; background: #ea4335">
-      Сбросить
-    </button> -->
-
     <div id="status"></div>
 
     <script src="popup.js"></script>
