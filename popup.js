@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 window.scrollTo(0, currentHeight);
 
                 // Обновляем статус
-                loadingIndicator.textContent = `${MESSAGES.LOADING_PROGRESS} (${scrollCount}/${maxScrolls}) | Заметок: ${totalNotes}`;
+                loadingIndicator.textContent = `${MESSAGES.LOADING_PROGRESS} циклов (${scrollCount}/${maxScrolls})`;
 
                 // Ждем загрузки новых данных
                 await new Promise((resolve) =>
@@ -222,7 +222,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 scrollCount++;
               }
 
-              loadingIndicator.textContent = `Загружено ${totalNotes} заметок`;
+              // loadingIndicator.textContent = `Загружено ${totalNotes} заметок`;
 
               setTimeout(
                 () => loadingIndicator.remove(),
